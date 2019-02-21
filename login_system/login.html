@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <title>简易注册登录</title>
+</head>
+<body>
+用户：<input type="text" id="user"><br>
+密码：<input type="text" id="pass"><br>
+<button id="register">注册</button> <button id="login">登录</button>
+
+<script>
+    register.onclick = function () {
+        ajax({
+            'type': 'get',
+            'url': 'http://localhost:2871',
+            'data': {
+                user: user.value,
+                pass: pass.value
+            },
+            'success': function (data) {
+                alert(data);
+            },
+            'error': function () {
+                alert("注册失败");
+            }
+        })
+    };
+
+    login.onclick = function () {
+        ajax({
+            'type': 'get',
+            'url': 'http://localhost:2872',
+            'data': {
+                user: user.value,
+                pass: pass.value
+            },
+            'success': function (data) {
+                alert(data);
+            },
+            'error': function () {
+                alert("登录失败");
+            }
+        })
+    };
+
+    function ajax(json) {
+        let ajax;
+        if (window.XMLHttpRequest){
+            ajax = new XMLHttpRequest();
+        }else{
+            ajax = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        if (json.type === 'get'){
+            ajax.open('get',json.url+'?'+JsonToString(json.data),true);
+            ajax.send();
+        }else if (json.type === 'post'){
+            ajax.open('post',json.url,true);
+            ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            ajax.send(JsonToString(url.data));
+        }
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4){
+                if (ajax.status >= 200 && ajax.status < 300 ||ajax.status == 304){
+                    json.success(ajax.responseText);
+                }else {
+                    json.error || json.error();
+                }
+            }
+        };
+
+        function JsonToString(json) {
+            let arr = [];
+            for (let i in json){
+                arr.push(i+'='+json[i]);
+            };
+            return arr.join('&')
+        }
+    };
+
+
+</script>
+</body>
+</html>
