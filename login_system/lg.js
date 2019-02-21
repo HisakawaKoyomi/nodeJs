@@ -28,5 +28,5 @@ http.createServer(function (req,res) {
         res.write("该账户名仍未被注册");
     };
     res.end();
-    
+
 }).listen(2872);
