@@ -1,6 +1,10 @@
-/*ajax({
-    
-});*/
+ajax({
+    'url': 'http://localhost:2936',
+    'type': 'get',
+    'success': function () {
+
+    }
+});
 
 sign.onclick = function () {
     mask.style.display = 'block';

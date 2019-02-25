@@ -83,9 +83,9 @@ http.createServer(function (req,res) {
         if (err){
             console.log(err);
         } else{
-            var jsonArr = JSON.parse(data);
+            var jsonArr = eval('('+data+')');
             jsonArr.push(json.editTitle);
-            fs.writeFile('../文章列表.txt','utf-8',function (err) {
+            fs.writeFile('../文章列表.txt',JSON.stringify(jsonArr),function (err) {
                 if (err){
                     console.log(err);
                 }else {
