@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>News</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div id="mask" class="mask"></div>
+
+<div id="header" class="header">
+    <span id="sPan">欢迎登录</span>
+    <button id="sign">注册</button>
+    <button id="login">登录</button>
+    <button id="edit">发布文章</button>
+    <button id="check">查看所有账号</button>
+</div>
+
+<div id="content" class="content">
+    <ul id="allTitle" class="allTitle">
+        <li><a href="javascript:;" id="title" class="title">今天天气真好</a></li>
+    </ul>
+    <ol id="pager" class="pager">
+        <li><a href="javascript:;" class="current changePage">1</a></li>
+        <li><a href="javascript:;" class="changePage">2</a></li>
+    </ol>
+</div>
+
+<div id="loginNode" class="loginNode">
+    <p>注册登录框</p>
+    <input type="button" id="cls_login" class="cls-login cls" value="X">
+    <div class="line">用户：<input type="text" id="user" class="user"></div>
+    <div class="line">密码：<input type="text" id="pass" class="pass"></div>
+    <div class="line-button">
+        <button id="sg">注册</button>
+        <button id="lg">登录</button>
+    </div>
+</div>
+
+<div id="editNode" class="editNode">
+    <input type="button" id="cls_edit" class="cls-edit cls" value="X">
+    <div class="line">
+        文章名称：<br>
+        <input type="text" id="edit_title">
+    </div>
+    <div class="line">
+        文章内容：<br>
+        <textarea id="edit_content"></textarea>
+    </div>
+    <button id="submit">提交</button>
+</div>
+
+<div id="newsNode" class="newsNode">
+    <div id="news" class="news"></div>
+    <input type="button" id="cls_news" class="cls-news cls" value="X">
+</div>
+<!--
+<div id="userList">
+    <ul id="list"></ul>
+    <input type="button" id="cls_list" class="cls-list cls" value="关闭">
+</div>
+-->
+
+<script src="js/myFunc.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
