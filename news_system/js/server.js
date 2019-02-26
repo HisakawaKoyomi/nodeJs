@@ -47,9 +47,8 @@ http.createServer(function (req,res) {
 http.createServer(function (req,res) {
     res.setHeader('Access-Control-Allow-Origin','*');
     var json = urlLib.parse(req.url,true).query;
-    console.log(json.user);
-    console.log(vip[json.user]);
-    console.log(json.pass);
+ /*   console.log(typeof  vip[json.user]);
+    console.log(typeof json.pass);*/
 
     if (vip[json.user] == json.pass){ //json中的数据类型与解析数据的数据类型不同！！
         console.log('ok');
@@ -153,13 +152,13 @@ http.createServer(function (req,res) {
 http.createServer(function (req,res) {
     res.setHeader('Access-Control-Allow-Origin','*');
     var json = urlLib.parse(req.url,true).query;
-    js.readFile('../账号管理.txt','utf-8',function (err,data) {
+    fs.readFile('../账号管理.txt','utf-8',function (err,data) {
         if (err){
             console.log(err);
         }else {
             var jsonData = JSON.parse(data);
-            delete jsonData[json];
-            js.writeFile('../账号管理.txt',jsonData,function (err) {
+            delete jsonData[json.name];
+            fs.writeFile('../账号管理.txt',JSON.stringify(jsonData),function (err) {
                 if (err){
                     console.log(err);
                 }else {
@@ -170,4 +169,4 @@ http.createServer(function (req,res) {
             })
         }
     })
-}).listen(8881);
+}).listen(9992);

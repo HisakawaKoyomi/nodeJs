@@ -1,17 +1,7 @@
-/*var express = require('express');
-var server = express();
+let json = {'"1"':2,'"3"':4};
+let str = JSON.stringify(json);
+console.log(str);
+let re = JSON.parse(str);
+console.log(re);
 
-server.listen(9218);
-server.use('',function (req,res) {
-    res.setHeader('Access-Control-Allow-Origin','*');
-    res.write('demo');
-    res.end();
-});*/
 
-let http = require('http');
-
-http.createServer(function (req,res) {
-    res.setHeader('Access-Control-Allow-Origin','*');
-    res.write('demo');
-    res.end()
-}).listen(9218);
