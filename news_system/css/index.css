@@ -146,3 +146,26 @@ button{
     box-sizing: border-box;
     padding: 30px;
 }
+
+.userList{
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid black;
+    padding: 40px;
+    background: white;
+    box-shadow: 0 0 5px black;
+    font-size: 18px;
+    z-index: 3;
+    display: none;
+}
+
+.userList .deleteUser{
+    float: right;
+    text-decoration: none;
+    font-size: 14px;
+    color: darkred;
+}

@@ -1,8 +1,32 @@
 ajax({
     'url': 'http://localhost:2936',
     'type': 'get',
-    'success': function () {
+    'success': function (data) {
+        var arrData = eval('('+data+')');
+        window.allArr = [];
+        var miniArr = [];
 
+        for (var i = 0;i < arrData.length;i++){
+            miniArr.push(arrData[i]);
+                if ((i + 1) % 5 === 0){
+                    allArr.push(miniArr);
+                    miniArr = [];
+                }else if (i === arrData.length - 1){
+                    allArr.push(miniArr);
+                }
+        }
+
+        for (var i = 0;i < allArr.length;i++){
+            var oli = document.createElement('li');
+            oli.innerHTML = '<a href="javascript:;" class="changePage">' + (Number(i) + 1) + '</a>';
+            pager.appendChild(oli);
+        }
+
+        for (var i = 0;i < allArr[0].length;i++){
+            var uli = document.createElement('li');
+            uli.innerHTML = '<a href="javascript:;" id="title" class="title">' + allArr[0][i] + '</a>';
+            allTitle.appendChild(uli);
+        }
     }
 });
 
@@ -50,14 +74,14 @@ lg.onclick = function () {
         },
         'success': function (data) {
             alert(data);
-            if (data == '登录成功'){
+            if (data === '登录成功'){
                 mask.style.display = loginNode.style.display = sign.style.display = login.style.display = 'none';
                 sPan.innerHTML = user.value;
                 sPan.style.display = edit.style.display = 'inline-block';
             }
             if (data === '管理员登录成功'){
-                mask.style.dispaly = loginNode.style.display = sign.style.display = login.style.display = 'none';
-                sPan.innerHTML = '尊敬的管理员' + user.value;
+                mask.style.display = loginNode.style.display = sign.style.display = login.style.display = 'none';
+                sPan.innerHTML = '尊敬的管理员 ' + user.value;
                 sPan.style.display = edit.style.display = check.style.display = 'inline-block';
             }
         }
@@ -90,6 +114,27 @@ submit.onclick = function () {
     })
 };
 
+check.onclick = function () {
+    mask.style.display = 'block';
+    userList.style.display = 'block';
+    ajax({
+        'url': 'http://localhost:8881',
+        'type': 'get',
+        'success': function (data) {
+            var arr = eval('('+ data +')');
+            for (var i = 0;i < arr.length;i++){
+                var li = document.createElement('li');
+                li.innerHTML = '<span>'+ arr[i] +'</span><a href="javascript:;" class="deleteUser">删除</a>';
+                list.appendChild(li);
+            }
+        }
+    })
+};
+cls_list.onclick = function () {
+    mask.style.display = 'none';
+    userList.style.display = 'none';
+};
+
 document.onclick = function (e) {
     var ev = e || event;
     var iTarget = ev.srcElement || ev.target;
@@ -107,9 +152,33 @@ document.onclick = function (e) {
             }
         })
     }
+
+    if (iTarget.className === 'changePage'){
+        allTitle.innerHTML = '';
+        for (var i = 0;i < allArr[iTarget.innerHTML - 1].length;i++){
+            var uli = document.createElement('li');
+            uli.innerHTML = '<a href="javascript:;" id="title" class="title">' + allArr[iTarget.innerHTML - 1][i] + '</a>';
+            allTitle.appendChild(uli);
+        }
+    }
+
+    if (iTarget.className === 'deleteUser'){
+        ajax({
+            'url': 'http://localhost:9992',
+            'type': 'get',
+            'data': {
+                name: iTarget.parentNode.children[0].innerHTML
+            },
+            'success': function (data) {
+                alert(data);
+                iTarget.parentNode.remove();
+            }
+        })
+    }
 };
 
 cls_news.onclick = function () {
     newsNode.style.display = 'none';
 };
+
 
