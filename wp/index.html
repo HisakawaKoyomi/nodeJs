@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网盘</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .outSide{
+            margin-top: 15px;
+        }
+    </style>
+
+</head>
+<body>
+<!--登录注册顶部-->
+<div class="container outSide">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <input type="button" class="btn btn-default btn-primary" value="登录 / 注册" data-toggle="modal" data-target=".abc">
+        </div>
+    </div>
+</div>
+<!--模态框-->
+<div class="modal fade abc" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">注册登录框</h4>
+            </div>
+            <div class="modal-body">
+                <!--注册登录框的主体内容-->
+                <form>
+                    <div class="form-group">
+                        <label>用户名：</label>
+                        <input type="" name="" class="form-control userNode">
+                    </div>
+                    <div class="form-group">
+                        <label>密码：</label>
+                        <input type="" name="" class="form-control passNode">
+                    </div>
+                    <!--表单中的按钮一般使用input-->
+                    <input type="button" name="" value="登录" class="btn btn-default btn-login">
+                    <input type="button" name="" value="注册" class="btn btn-default btn-info btn-res">
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--加载所需要的插件-->
+<script src="js/jq.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
