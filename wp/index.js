@@ -43,13 +43,26 @@ loginRouter.use('/res',(req,res) => {
                                 console.log(err);
                                 res.send({'ok': 0,'msg': '数据库写入失败'});
                             }else{
-                                res.send({'ok': 1,'msg': '恭喜，注册成功'});
+                                connection.query(`CREATE TABLE ${req.query.user} (
+                                 ID int(255) NOT NULL AUTO_INCREMENT,
+                                 LastName varchar(255) NOT NULL,
+                                 hashName varchar(255) NOT NULL,
+                                 lastTime varchar(255) NOT NULL,
+                                 type varchar(255),
+                                 size varchar(255) NOT NULL,
+                                 download varchar(255) NOT NULL,
+                                 PRIMARY KEY (ID)
+                                )`,(err,data) => {
+                                    if (err){
+                                        console.log(err);
+                                    }else {
+                                        res.send({'ok': 1,'msg': '恭喜，注册成功'});
+                                    }
+                                });
                             }
                             connection.release(); // conn.end() 即将被弃用
                         });
-
                     }
-
                 }
             });
         }
