@@ -1,7 +1,17 @@
-let json = {'"1"':2,'"3"':4};
-let str = JSON.stringify(json);
-console.log(str);
-let re = JSON.parse(str);
-console.log(re);
+function sleep(second) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject('want to sleep~');
+        }, second);
+    })
+}
 
-
+async function errorDemoSuper() {
+    try {
+        let result = await sleep(1000);
+        console.log(1);
+    } catch (err) {
+        console.log(err);
+    }
+}
+errorDemoSuper();
