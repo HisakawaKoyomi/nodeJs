@@ -10,15 +10,53 @@
 </head>
 <body>
 <!--登录注册顶部-->
-<div class="container outSide" style="margin-top: 15px;">
+<div class="container outSide" style="margin-top: 15px;margin-bottom: 10px;">
     <div class="row">
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-3"> <!--col-md-offset-1 可设置偏移一格-->
             <input type="button" class="btn btn-default btn-primary btn-myBtn" value="登录 / 注册" data-toggle="modal" data-target=".abc">
             <p class="nameNode hide" style="margin-top: 14px; font-size: 16px; font-weight: bold">欢迎回来 <span></span></p>
         </div>
     </div>
 </div>
-<!--模态框-->
+
+<!--文件信息显示-->
+<div class="container fileShowNode hide">
+    <table class="table table-center table-hover">
+        <thead>
+        <tr>
+            <td>序号</td>
+            <td>文件名</td>
+            <td>文件大小</td>
+            <td>上传时间</td>
+            <td>下载次数</td>
+            <td>是否删除</td>
+        </tr>
+        </thead>
+
+        <tbody>
+       <!-- <tr>
+            <td>1</td>
+            <td>picture.jpg</td>
+            <td>324kb</td>
+            <td>2019/2/3</td>
+            <td>0</td>
+            <td><input type="button" name="" class="btn btn-default btn-danger btn-xs" value="删除"></td>
+        </tr>-->
+        </tbody>
+    </table>
+
+    <!--上传文件栏-->
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="file" name="" class="fsNode">
+        </div>
+        <div class="form-group">
+            <input type="button" name="" class="btn btn-default btn-primary btn-xs btn-setFiles" value="上传文件" data-toggle="modal" data-target=".bbb">
+        </div>
+    </form>
+</div>
+
+<!--登录模态框-->
 <div class="modal fade abc" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -46,11 +84,68 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!--上传文件提示框-->
+<div class="modal fade bbb" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">信息栏</h4>
+            </div>
+            <div class="modal-body bodytextNode">
+                <p></p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!--加载所需要的插件-->
 <script src="js/jq.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
     (() => {
+        var index = 1;
+        function toTr (index,filesName,size,timer,download,hash){
+            var tr = document.createElement('tr');
+            $(tr).attr('hash',hash);
+            tr.innerHTML = `
+               <td>${index}</td>
+               <td>${filesName}</td>
+               <td>${size}</td>
+               <td>${timer}</td>
+               <td>${download}</td>
+               <td><input type="button" class="btn btn-default btn-danger btn-xs btn-delete" value="删除" data-toggle="modal" data-target=".bbb"></td>`;
+            return tr;
+        }
+
+        /*上传文件*/
+        $('.btn-setFiles').on({
+           click() {
+               var formData = new FormData();
+               /*console.log($('.fsNode')[0].files[0]);*/
+               formData.append('files',$('.fsNode')[0].files[0]);
+               formData.append('fsUser',$('.userNode').val());
+
+               var xhr = new XMLHttpRequest();
+               xhr.open('post','http://localhost:9111/login/getFiles',true);
+               xhr.send(formData);
+
+               xhr.onload = function () {
+                   var json = eval('(' + xhr.responseText + ')');
+
+                   if (json.ok == 1){
+                       $('.fileShowNode tbody')[0].appendChild(toTr(index,$('.fsNode')[0].files[0].name,($('.fsNode')[0].files[0].size/1024).toFixed(2) + ' KB',json.timer,0,json.hash));
+                       index ++;
+                       $('.bodytextNode p').html(json.msg);
+                   }else {
+                       $('.bodytextNode p').html(json.msg);
+                   }
+                   $('.fsNode').val('');
+               }
+
+           }
+        });
+
         /*点击注册登录按钮，应清除上一次的填写信息内容*/
         $('.btn-myBtn').on({
             click() {
@@ -100,6 +195,7 @@
                             $('.btn-myBtn').hide();
                             $('.nameNode').removeClass('hide');
                             $('.nameNode span').html($('.userNode').val());
+                            $('.fileShowNode').removeClass('hide');
                         }else {
                             alert(data.msg);
                             $('.myForm .form-group').addClass('has-error');
