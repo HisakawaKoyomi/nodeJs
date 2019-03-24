@@ -69,11 +69,11 @@
                 <form class="myForm">
                     <div class="form-group">
                         <label>用户名：</label>
-                        <input type="" name="" class="form-control userNode">
+                        <input type="text" name="" class="form-control userNode">
                     </div>
                     <div class="form-group">
                         <label>密码：</label>
-                        <input type="" name="" class="form-control passNode">
+                        <input type="password" name="" class="form-control passNode">
                     </div>
                     <!--表单中的按钮一般使用input-->
                     <input type="button" name="" value="登录" class="btn btn-default btn-login">
@@ -84,7 +84,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!--上传文件提示框-->
+<!--上传文件提示框
 <div class="modal fade bbb" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -95,9 +95,9 @@
             <div class="modal-body bodytextNode">
                 <p></p>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div> /.modal-content
+    </div> /.modal-dialog
+</div> /.modal -->
 
 <!--加载所需要的插件-->
 <script src="js/jq.js"></script>
@@ -136,15 +136,43 @@
                    if (json.ok == 1){
                        $('.fileShowNode tbody')[0].appendChild(toTr(index,$('.fsNode')[0].files[0].name,($('.fsNode')[0].files[0].size/1024).toFixed(2) + ' KB',json.timer,0,json.hash));
                        index ++;
-                       $('.bodytextNode p').html(json.msg);
+                      /* $('.bodytextNode p').html(json.msg);*/
+                       alert(json.msg);
                    }else {
-                       $('.bodytextNode p').html(json.msg);
+                      /* $('.bodytextNode p').html(json.msg);*/
+                       alert(json.msg);
                    }
                    $('.fsNode').val('');
                }
 
            }
         });
+
+        /*删除文件*/
+        $('body').on({
+           'click': function () {
+               var _this = this;
+               $.ajax({
+                   url: 'http://localhost:9111/login/remove',
+                   type: 'get',
+                   data: {
+                       'user': $('.userNode').val(),
+                       'hash': $(_this.parentNode.parentNode).attr('hash')
+                   },
+                   success: function (data) {
+                       if (data.ok == 1){
+                           alert(data.msg);
+                           _this.parentNode.parentNode.remove();
+                       }else {
+                           alert(data.msg);
+                       }
+
+                   }
+
+               })
+           }
+        },'.btn-delete');
+
 
         /*点击注册登录按钮，应清除上一次的填写信息内容*/
         $('.btn-myBtn').on({
@@ -196,6 +224,12 @@
                             $('.nameNode').removeClass('hide');
                             $('.nameNode span').html($('.userNode').val());
                             $('.fileShowNode').removeClass('hide');
+
+                            for (var i = 0;i < data.filesData.length;i++){
+                                $('.fileShowNode tbody')[0].appendChild(toTr(index,data.filesData[i].lastName,(data.filesData[i].size/1024).toFixed(2) + ' KB',data.filesData[i].lastTime,data.filesData[i].download,data.filesData[i].hashName));
+                                index ++;
+                            }
+
                         }else {
                             alert(data.msg);
                             $('.myForm .form-group').addClass('has-error');
