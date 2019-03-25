@@ -19,3 +19,26 @@ start to learn node.js, whether I can find a greater world?
  * 管理员账号可以将普通用户账号从本地模拟数据库删除
  
  ------------
+## 共享网盘
+
+### 工具
+ * Express
+ * MySql
+ * Jquery（仅基本的使用）
+ * Bootstrap (较简易)
+### 功能
+ * 用户个人账号注册、登录
+ * 用户上传文件及删除
+ * 用户在网盘主页下载文件，对应下载次数更新
+ * 对应数据库的增删查改
+##
+### 展示
+![show](./wp/登录页面.png "index.html展示效果")  
+
+![show](./wp/展示3.png "index.html展示效果")  
+
+![show](./wp/展示2.png "show.html展示效果")  
+
+![show](./wp/数据库展示.png "index.html展示效果")
+
+---
