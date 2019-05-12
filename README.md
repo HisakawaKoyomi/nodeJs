@@ -42,3 +42,15 @@ start to learn node.js, whether I can find a greater world?
 ![show](./wp/数据库展示.png "index.html展示效果")
 
 ---
+## 后端接口搭建
+
+### 工具
+  * express
+  * postman
+  * mongoDB Atlas  
+  
+### 功能
+  * 用户的登录注册，token及validate验证，个人头像avatar的获取
+  * 个人信息的添加删除，包括基本信息，工作经历，教育经历
+  * 点赞及取消点赞，评论及删除评论
+

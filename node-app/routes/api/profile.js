@@ -12,7 +12,7 @@ const validateEducationInput = require("../../validator/education");
 
 // $router GET api/profile
 // @desc 获取登录用户个人信息接口
-// @access private
+// @access Private
 router.get("/",passport.authenticate("jwt",{session: false}),(req,res) => {
     const errors = {};
 
@@ -29,7 +29,7 @@ router.get("/",passport.authenticate("jwt",{session: false}),(req,res) => {
 
 // $router POST api/profile
 // @desc 创建与编辑个人信息接口
-// @access private
+// @access Private
 router.post("/",passport.authenticate("jwt",{session: false}),(req,res) => {
    const {errors,isValid} = validateProfileInput(req.body);
    const profileFields = {};
@@ -73,7 +73,7 @@ router.post("/",passport.authenticate("jwt",{session: false}),(req,res) => {
 
 // $router GET api/profile/handle/:handle
 // @desc 通过handle获取个人信息
-// @access public
+// @access Public
 router.get("/handle/:handle",(req,res) => {
    const errors = {};
    Profile.findOne({handle: req.params.handle})
@@ -89,7 +89,7 @@ router.get("/handle/:handle",(req,res) => {
 
 // $router GET api/profile/user/:user
 // @desc 通过user_id获取个人信息
-// @access public
+// @access Public
 router.get("/user/:user_id",(req,res) => {
     const errors = {};
     Profile.findOne({user: req.params.user_id})
@@ -105,7 +105,7 @@ router.get("/user/:user_id",(req,res) => {
 
 // $router GET api/profile/all
 // @desc 获取所有人的信息
-// @access public
+// @access Public
 router.get("/all",(req,res) => {
     const errors = {};
    Profile.find()
